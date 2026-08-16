@@ -81,6 +81,6 @@ src/
 
 ## 👨‍💻 Autor
 
-**Jonatas Rosa Moura** [Portfólio](https://jonatasrmoura.vercel.app/)
+**Jonatas Rosa Moura:** [Portfólio](https://jonatasrmoura.vercel.app/)
 
 Desenvolvido com foco em boas práticas de engenharia de software.
