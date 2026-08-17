@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "module": "nodenext",
-    "target": "esnext",
+    "target": "es2022",
+    "moduleResolution": "nodenext",
     "types": [],
-    "rootDir": "./",
+    "outDir": "./dist",
+    "rootDir": "./src",
     "paths": {
       "@modules/*": ["./src/modules/*"],
       "@config/*": ["./src/config/*"],
@@ -30,10 +32,10 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
 
-    // container
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true
-  }
+  },
+  "include": ["src/**/*"]
 }

@@ -1,8 +1,9 @@
 import fastify, { FastifyInstance } from "fastify";
 import cors from "@fastify/cors";
+
 import { env } from "@config/env";
 import { errorHandler } from "@shared/http/errors/errorHandler";
-import { healthApp } from "./healthApp";
+import { appRoutes } from "./routes";
 
 export class App {
   private readonly app: FastifyInstance;
@@ -29,7 +30,7 @@ export class App {
   }
 
   private configureRoutes(): void {
-    this.app.register(healthApp);
+    this.app.register(appRoutes);
   }
 
   // Método público para expor a instância (necessário para testes com app.inject() ou para o Server)
