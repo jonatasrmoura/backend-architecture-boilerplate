@@ -105,6 +105,8 @@ export class UsersRepository implements IUsersRepository {
       isActive: userPrimsa?.isActive,
       document: maskDocument(userPrimsa?.document),
       createdAt: userPrimsa?.created_at,
+      deletedAt: userPrimsa?.deleted_at,
+      password: userPrimsa?.password,
     };
   }
 }

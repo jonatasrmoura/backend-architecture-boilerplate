@@ -5,4 +5,6 @@ export interface IReadUserDTO {
   isActive: boolean;
   document: string;
   createdAt: Date;
+  deletedAt: Date;
+  password: string;
 }
