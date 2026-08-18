@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsx watch src/shared/http/server.ts",
-    "build": "tsc"
+    "dev": "tsx watch src/shared/infra/http/server.ts",
+    "build": "tsc",
+    "db:create:migrate": "npx prisma migrate dev --name"
   },
   "keywords": [],
   "author": "",
@@ -13,6 +14,8 @@
   "type": "commonjs",
   "devDependencies": {
     "@types/node": "^26.2.0",
+    "dotenv": "^17.4.2",
+    "prisma": "^7.9.1",
     "tsx": "^4.23.9",
     "typescript": "^7.0.2"
   },
@@ -20,10 +23,12 @@
     "@fastify/cors": "^11.3.0",
     "@fastify/swagger": "^9.8.1",
     "@fastify/swagger-ui": "^6.1.1",
+    "@prisma/adapter-pg": "^7.9.1",
+    "@prisma/client": "^7.9.1",
     "bcryptjs": "^3.0.3",
-    "dotenv": "^17.4.2",
     "fastify": "^5.12.0",
     "fastify-type-provider-zod": "^7.0.0",
+    "reflect-metadata": "^0.2.2",
     "tsyringe": "^4.10.0",
     "uuid": "^14.0.1",
     "zod": "^4.4.3"

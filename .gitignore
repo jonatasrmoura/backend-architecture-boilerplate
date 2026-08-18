@@ -46,3 +46,5 @@ pnpm-debug.log*
 # Next & vercel specific (old/temporary)
 .vercel
 next-env.d.ts
+
+/src/generated/prisma

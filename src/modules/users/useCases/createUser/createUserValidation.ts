@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { isValidCPF } from "../../utils/isValidCPF";
+import { isValidCPF } from "@modules/users/utils/isValidCPF";
 
 export const createUserSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters long"),

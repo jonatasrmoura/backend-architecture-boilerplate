@@ -1,6 +1,6 @@
 # 🚀 Backend Architecture Boilerplate
 
-> Um boilerplate de backend robusto e escalável construído em Node.js e TypeScript, aplicando rigorosamente os princípios **SOLID**, **Clean Architecture**, **Programação Orientada a Objetos (POO)** e **Inversão de Controle (IoC)**.
+> Um boilerplate de backend robusto e escalável construído em Node.js, TypeScript, Zod e PrismaIO, aplicando rigorosamente os princípios **SOLID**, **Clean Architecture**, **Programação Orientada a Objetos (POO)** e **Inversão de Controle (IoC)**.
 
 ---
 

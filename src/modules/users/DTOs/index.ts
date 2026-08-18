@@ -1,4 +1,5 @@
-export * from "./IUsers";
+export * from "./IUserPrisma";
 export * from "./ICreateUserDTO";
 export * from "./IUpdateUserDTO";
-export * from "./ISaveUserDTO";
+export * from "./IReadUserDTO";
+export * from "./IListUsersDTO";
