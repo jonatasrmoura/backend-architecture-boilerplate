@@ -2,18 +2,18 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { container } from "tsyringe";
 
 import { type ItemById } from "@shared/common/itemByIdSchema";
-import { ReadUserUseCase } from "./ReadUserUseCase";
+import { DeleteUserUseCase } from "./DeleteUserUseCase";
 
-export class ReadUserController {
+export class DeleteUserController {
   async handle(
     request: FastifyRequest<{ Params: ItemById }>,
     reply: FastifyReply,
   ): Promise<FastifyReply> {
     const { id } = request.params;
-    const readUserUseCase = container.resolve(ReadUserUseCase);
+    const deleteUserUseCase = container.resolve(DeleteUserUseCase);
 
-    const result = await readUserUseCase.execute({ id });
+    await deleteUserUseCase.execute({ id });
 
-    return reply.status(200).send(result);
+    return reply.status(204).send();
   }
 }

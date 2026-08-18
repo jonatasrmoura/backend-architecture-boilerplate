@@ -1,20 +1,15 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { container } from "tsyringe";
 
-import {
-  type PaginationQuery,
-  paginationQuerySchema,
-} from "@shared/common/paginationQuerySchema";
+import { type PaginationQuery } from "@shared/common/paginationQuerySchema";
 import { ListUsersUseCase } from "./ListUsersUseCase";
 
 export class ListUsersController {
   async handle(
-    request: FastifyRequest,
+    request: FastifyRequest<{ Querystring: PaginationQuery }>,
     reply: FastifyReply,
   ): Promise<FastifyReply> {
-    const { limit, page } = paginationQuerySchema.parse(
-      request.params,
-    ) as PaginationQuery;
+    const { limit, page } = request.query;
 
     const listUsersUseCase = container.resolve(ListUsersUseCase);
 

@@ -6,17 +6,19 @@ import {
   ListUsersController,
   ReadUserController,
   UpdateUserController,
+  DeleteUserController,
 } from "@modules/users/useCases";
 
 import { createUserSchema } from "@modules/users/useCases/createUser/createUserValidation";
 import { paginationQuerySchema } from "@shared/common/paginationQuerySchema";
 import { itemByIdSchema } from "@shared/common/itemByIdSchema";
-import { updateUserSchema } from "../../../../modules/users/useCases/updateUser/updateUserValidation";
+import { updateUserSchema } from "@modules/users/useCases/updateUser/updateUserValidation";
 
 const createUserController = new CreateUserController();
 const listUsersController = new ListUsersController();
 const readUserController = new ReadUserController();
 const updateUserController = new UpdateUserController();
+const deleteUserController = new DeleteUserController();
 
 export async function usersRoutes(app: FastifyInstance) {
   const appWithZod = app.withTypeProvider<ZodTypeProvider>();
@@ -70,5 +72,17 @@ export async function usersRoutes(app: FastifyInstance) {
       },
     },
     updateUserController.handle.bind(updateUserController),
+  );
+
+  appWithZod.delete(
+    "/:id",
+    {
+      schema: {
+        tags: ["Users"],
+        description: "Delete Soft de um único usuário do sistema",
+        params: itemByIdSchema,
+      },
+    },
+    deleteUserController.handle.bind(deleteUserController),
   );
 }

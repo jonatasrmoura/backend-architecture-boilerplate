@@ -29,7 +29,10 @@ export class UsersRepository implements IUsersRepository {
   }
 
   public async delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+    await prisma.users.update({
+      where: { id },
+      data: { deleted_at: new Date() },
+    });
   }
 
   public async findByDocument(document: string): Promise<IReadUserDTO | null> {
