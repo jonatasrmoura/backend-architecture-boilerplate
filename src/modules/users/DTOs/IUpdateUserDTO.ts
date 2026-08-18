@@ -1,6 +1,6 @@
 export interface IUpdateUserDTO {
-  name?: string;
-  email?: string;
-  document?: string;
-  isActive?: boolean;
+  name?: string | undefined;
+  email?: string | undefined;
+  document?: string | undefined;
+  isActive?: boolean | undefined;
 }

@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "tsx watch src/shared/infra/http/server.ts",
     "build": "tsc",
-    "db:create:migrate": "npx prisma migrate dev --name"
+    "db:create:migrate": "npx prisma migrate dev --name",
+    "db:generate": "npx prisma generate"
   },
   "keywords": [],
   "author": "",

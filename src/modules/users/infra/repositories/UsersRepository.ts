@@ -6,8 +6,9 @@ import type {
   IListUsersDTO,
   IUserPrisma,
 } from "@modules/users/DTOs";
-import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
-import { PaginationQuery } from "@shared/common/paginationQuerySchema";
+import type { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import type { PaginationQuery } from "@shared/common/paginationQuerySchema";
+import { maskDocument } from "@modules/users/utils/maskDocument";
 
 export class UsersRepository implements IUsersRepository {
   public async create(data: ICreateUserDTO): Promise<void> {
@@ -17,7 +18,14 @@ export class UsersRepository implements IUsersRepository {
   }
 
   public async update(id: string, data: IUpdateUserDTO): Promise<void> {
-    await prisma.users.update({ where: { id }, data });
+    const filteredData = Object.fromEntries(
+      Object.entries(data).filter(([_, value]) => value !== undefined),
+    );
+
+    await prisma.users.update({
+      where: { id },
+      data: filteredData,
+    });
   }
 
   public async delete(id: string): Promise<void> {
@@ -67,6 +75,7 @@ export class UsersRepository implements IUsersRepository {
       orderBy: {
         created_at: "desc",
       },
+      where: { deleted_at: null },
     });
 
     const data = users.map((user) => this._preperUserData(user));
@@ -81,6 +90,7 @@ export class UsersRepository implements IUsersRepository {
       orderBy: {
         created_at: "desc",
       },
+      where: { deleted_at: null },
     });
   }
 
@@ -90,7 +100,7 @@ export class UsersRepository implements IUsersRepository {
       name: userPrimsa?.name,
       email: userPrimsa?.email,
       isActive: userPrimsa?.isActive,
-      document: userPrimsa?.document,
+      document: maskDocument(userPrimsa?.document),
       createdAt: userPrimsa?.created_at,
     };
   }

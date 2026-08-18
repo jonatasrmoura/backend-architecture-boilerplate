@@ -1,6 +1,6 @@
 import { injectable, inject } from "tsyringe";
 
-import type { ItemId } from "@shared/common/itemByIdSchema";
+import type { ItemById } from "@shared/common/itemByIdSchema";
 import type { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
 import type { IReadUserDTO } from "@modules/users/DTOs";
 import { NotFoundError } from "@shared/errors/NotFoundError";
@@ -12,7 +12,7 @@ export class ReadUserUseCase {
     private readonly usersRepository: IUsersRepository,
   ) {}
 
-  async execute({ id }: ItemId): Promise<IReadUserDTO> {
+  async execute({ id }: ItemById): Promise<IReadUserDTO> {
     const userExists = await this.usersRepository.findById(id);
 
     if (!userExists) {

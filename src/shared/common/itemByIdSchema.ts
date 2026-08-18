@@ -4,4 +4,4 @@ export const itemByIdSchema = z.object({
   id: z.uuid("Invalid param!"),
 });
 
-export type ItemId = z.infer<typeof itemByIdSchema>;
+export type ItemById = z.infer<typeof itemByIdSchema>;

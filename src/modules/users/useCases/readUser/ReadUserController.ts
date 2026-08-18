@@ -1,7 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
 import { container } from "tsyringe";
 
-import { type ItemId, itemByIdSchema } from "@shared/common/itemByIdSchema";
+import { type ItemById, itemByIdSchema } from "@shared/common/itemByIdSchema";
 import { ReadUserUseCase } from "./ReadUserUseCase";
 
 export class ReadUserController {
@@ -9,7 +9,7 @@ export class ReadUserController {
     request: FastifyRequest,
     reply: FastifyReply,
   ): Promise<FastifyReply> {
-    const { id } = itemByIdSchema.parse(request.params) as ItemId;
+    const { id } = itemByIdSchema.parse(request.params) as ItemById;
 
     const readUserUseCase = container.resolve(ReadUserUseCase);
 
