@@ -7,6 +7,7 @@ import type {
   IUserPrisma,
 } from "@modules/users/DTOs";
 import { IUsersRepository } from "@modules/users/repositories/IUsersRepository";
+import { PaginationQuery } from "@shared/common/paginationQuerySchema";
 
 export class UsersRepository implements IUsersRepository {
   public async create(data: ICreateUserDTO): Promise<void> {
@@ -44,8 +45,43 @@ export class UsersRepository implements IUsersRepository {
     return !response ? null : result;
   }
 
-  public async list(): Promise<IListUsersDTO> {
-    throw new Error("Method not implemented.");
+  public async listAll({
+    limit,
+    page,
+  }: PaginationQuery): Promise<IListUsersDTO> {
+    const [data, total] = await Promise.all([
+      this._list({ limit, page }),
+      this._count({ limit, page }),
+    ]);
+
+    return { data, total };
+  }
+
+  private async _list({
+    limit,
+    page,
+  }: PaginationQuery): Promise<IReadUserDTO[]> {
+    const users = await prisma.users.findMany({
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+
+    const data = users.map((user) => this._preperUserData(user));
+
+    return data;
+  }
+
+  private async _count({ limit, page }: PaginationQuery): Promise<number> {
+    return prisma.users.count({
+      take: limit,
+      skip: (page - 1) * limit,
+      orderBy: {
+        created_at: "desc",
+      },
+    });
   }
 
   private _preperUserData(userPrimsa: IUserPrisma | null): IReadUserDTO {

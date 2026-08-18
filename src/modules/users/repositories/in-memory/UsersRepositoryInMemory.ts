@@ -7,6 +7,7 @@ import type {
   IUserPrisma,
 } from "@modules/users/DTOs";
 import { IUsersRepository } from "../IUsersRepository";
+import { PaginationQuery } from "@shared/common/paginationQuerySchema";
 
 export class UsersRepositoryInMemory implements IUsersRepository {
   private users: Array<IUserPrisma> = [];
@@ -68,12 +69,25 @@ export class UsersRepositoryInMemory implements IUsersRepository {
     return !response ? null : this._preperUserData(response);
   }
 
-  public async list(): Promise<IListUsersDTO> {
-    const response = this.users.filter((user) => user.deleted_at === null);
+  public async listAll(query: PaginationQuery): Promise<IListUsersDTO> {
+    const [data, total] = await Promise.all([this._list(), this._count()]);
+
     return {
-      data: response.map((userPrisma) => this._preperUserData(userPrisma)),
-      total: response.length,
+      data,
+      total,
     };
+  }
+
+  private async _list(): Promise<IReadUserDTO[]> {
+    const response = this.users.filter((user) => user.deleted_at === null);
+    const users = response.map((user) => this._preperUserData(user));
+    return users;
+  }
+
+  private async _count(): Promise<number> {
+    const response = this.users.filter((user) => user.deleted_at === null);
+    const users = response.map((user) => this._preperUserData(user));
+    return users.length;
   }
 
   private _getByIndex(id: string): { userIndex: number; user: IUserPrisma } {

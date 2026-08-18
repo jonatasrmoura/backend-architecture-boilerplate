@@ -3,7 +3,9 @@ import {
   IUpdateUserDTO,
   IReadUserDTO,
   IListUsersDTO,
+  IUserPrisma,
 } from "@modules/users/DTOs";
+import { PaginationQuery } from "@shared/common/paginationQuerySchema";
 
 export interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<void>;
@@ -12,5 +14,5 @@ export interface IUsersRepository {
   findByDocument(document: string): Promise<IReadUserDTO | null>;
   findByEmail(email: string): Promise<IReadUserDTO | null>;
   findById(id: string): Promise<IReadUserDTO | null>;
-  list(): Promise<IListUsersDTO>;
+  listAll(query: PaginationQuery): Promise<IListUsersDTO>;
 }
