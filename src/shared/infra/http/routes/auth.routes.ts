@@ -1,11 +1,16 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 
-import { CreateTokenController } from "@modules/auth/useCases/createToken/CreateTokenController";
+import {
+  CreateTokenController,
+  ReadMeAuthController,
+} from "@modules/auth/useCases";
 
 import { createTokenSchema } from "@modules/auth/useCases/createToken/createTokenShema";
+import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
 
 const createTokenController = new CreateTokenController();
+const readMeAuthController = new ReadMeAuthController();
 
 export async function authRoutes(app: FastifyInstance) {
   const appWithZod = app.withTypeProvider<ZodTypeProvider>();
@@ -21,5 +26,18 @@ export async function authRoutes(app: FastifyInstance) {
       },
     },
     createTokenController.handle.bind(createTokenController),
+  );
+
+  appWithZod.get(
+    "/me",
+    {
+      onRequest: [ensureAuthenticated],
+      schema: {
+        tags: ["Auth"],
+        description: "Exibe o perfil do usuário logado",
+        security: [{ bearerAuth: [] }],
+      },
+    },
+    readMeAuthController.handle.bind(readMeAuthController),
   );
 }
