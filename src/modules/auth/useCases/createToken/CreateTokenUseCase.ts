@@ -34,7 +34,7 @@ export class CreateTokenUseCase {
       throw new AppError("User not actived.");
     }
 
-    const passwordMatch = await compare(password, user.password);
+    const passwordMatch = await compare(password, String(user.password));
 
     if (!passwordMatch) {
       throw new ConflictError("Email or Password incorrect!");

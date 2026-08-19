@@ -6,5 +6,5 @@ export interface IReadUserDTO {
   document: string;
   createdAt: Date;
   deletedAt: Date;
-  password: string;
+  password?: string | undefined;
 }

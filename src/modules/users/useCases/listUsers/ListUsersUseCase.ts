@@ -14,8 +14,13 @@ export class ListUsersUseCase {
   async execute({ limit, page }: PaginationQuery): Promise<IListUsersDTO> {
     const { data, total } = await this.usersRepository.listAll({ limit, page });
 
+    const result = data.map((user) => {
+      const { password, ...rest } = user;
+      return rest;
+    });
+
     return {
-      data,
+      data: result,
       total,
     };
   }
