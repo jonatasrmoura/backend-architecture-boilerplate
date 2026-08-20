@@ -4,24 +4,27 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import {
   CreateTokenController,
   ReadMeAuthController,
+  RefreshTokenController,
 } from "@modules/auth/useCases";
 
 import { createTokenSchema } from "@modules/auth/useCases/createToken/createTokenShema";
 import { ensureAuthenticated } from "../middlewares/ensureAuthenticated";
+import { refreshTokenSchema } from "../../../../modules/auth/useCases/refreshTokenUseCase/refreshTokenSchema";
 
 const createTokenController = new CreateTokenController();
 const readMeAuthController = new ReadMeAuthController();
+const refreshTokenController = new RefreshTokenController();
 
 export async function authRoutes(app: FastifyInstance) {
   const appWithZod = app.withTypeProvider<ZodTypeProvider>();
 
   appWithZod.post(
-    "/",
+    "/sessions",
     {
       schema: {
         tags: ["Auth"],
         description:
-          "Cria uma autenticação com JWT no sistema para o usuário cadastrado.",
+          "Autentica um usuário e retorna o access token e refresh token",
         body: createTokenSchema,
       },
     },
@@ -39,5 +42,17 @@ export async function authRoutes(app: FastifyInstance) {
       },
     },
     readMeAuthController.handle.bind(readMeAuthController),
+  );
+
+  appWithZod.post(
+    "/refresh-token",
+    {
+      schema: {
+        tags: ["Auth"],
+        description: "Gera um novo access token utilizando o refresh token",
+        body: refreshTokenSchema,
+      },
+    },
+    refreshTokenController.handle.bind(refreshTokenController),
   );
 }
