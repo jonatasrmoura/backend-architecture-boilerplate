@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "tsx watch src/shared/infra/http/server.ts",
     "build": "tsc",
+    "test": "vitest",
     "db:create:migrate": "npx prisma migrate dev --name",
     "db:generate": "npx prisma generate"
   },
@@ -18,7 +19,8 @@
     "dotenv": "^17.4.2",
     "prisma": "^7.9.1",
     "tsx": "^4.23.9",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.11"
   },
   "dependencies": {
     "@fastify/cors": "^11.3.0",

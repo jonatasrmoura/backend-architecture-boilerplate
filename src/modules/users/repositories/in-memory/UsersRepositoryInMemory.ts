@@ -60,12 +60,16 @@ export class UsersRepositoryInMemory implements IUsersRepository {
   }
 
   public async findByEmail(email: string): Promise<IReadUserDTO | null> {
-    const response = this.users.find((user) => user.email === email);
+    const response = this.users.find(
+      (user) => user.email === email && user.deleted_at === null,
+    );
     return !response ? null : this._preperUserData(response);
   }
 
   public async findByDocument(document: string): Promise<IReadUserDTO | null> {
-    const response = this.users.find((user) => user.document === document);
+    const response = this.users.find(
+      (user) => user.document === document && user.deleted_at === null,
+    );
     return !response ? null : this._preperUserData(response);
   }
 
@@ -117,6 +121,8 @@ export class UsersRepositoryInMemory implements IUsersRepository {
       email: userPrimsa?.email,
       isActive: userPrimsa?.isActive,
       document: userPrimsa?.document,
+      password: userPrimsa?.password,
+      deletedAt: userPrimsa?.deleted_at,
       createdAt: userPrimsa?.created_at,
     };
   }
